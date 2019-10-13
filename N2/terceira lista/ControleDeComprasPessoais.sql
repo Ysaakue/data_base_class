@@ -1,17 +1,54 @@
-a) select * from Credores;
+--a)
+  SELECT *
+  FROM Credores;
 
-b) select idCredores, nome from Credores order by nome;
+--b)
+  SELECT idCredores, nome
+  FROM Credores
+  ORDER BY nome;
 
-c) select Credores.nome, Compras.idCompras, Compras.dtCompra, sum(Parcelas.valor) from Credores, Compras, Parcelas where (Compras.Credores_idCredores = Credores.id) and (Parcelas.Compras_idCompras = Compras.idCompras) group by Credores.nome, Compras.dtCompra;
+--c)
+  SELECT Credores.nome, Compras.idCompras, Compras.dtCompra, sum(Parcelas.valor)
+  FROM Credores, Compras, Parcelas
+  WHERE (Compras.Credores_idCredores = Credores.id)
+  AND (Parcelas.Compras_idCompras = Compras.idCompras)
+  GROUP BY Credores.nome, Compras.dtCompra;
 
-d) select Compras.idCompras, Compras.dtCompra, sum(Parcelas.valor) from Compras, Credores, Parcelas where (Credores.idCredores = <1>) and (Parcelas.Compras_idCompras = Compras.idCompras);
+--d)
+  SELECT Compras.idCompras, Compras.dtCompra, sum(Parcelas.valor)
+  FROM Compras, Credores, Parcelas
+  WHERE (Credores.idCredores = 1)
+  AND (Parcelas.Compras_idCompras = Compras.idCompras);
 
-e) /*select Compras.*, sum(Parcelas.valor) as valorTotal from Compras, Parcelas where (valorTotal > 5000) and (Parcelas.Compras_idCompras = Compras.idCompras);*/
- select Compras.idCompras, sum(Parcelas.valor) as valorTotal from Compras, Parcelas where (Compras.idCompras = Parcelas.Compras_idCompras) group by Compras.idCompras having (valorTotal>50000);
+--e)
+  /*SELECT Compras.*, sum(Parcelas.valor) as valorTotal
+  FROM Compras, Parcelas
+  WHERE (valorTotal > 5000)
+  AND (Parcelas.Compras_idCompras = Compras.idCompras);*/
+  SELECT Compras.idCompras, sum(Parcelas.valor) AS valorTotal
+  FROM Compras, Parcelas
+  WHERE (Compras.idCompras = Parcelas.Compras_idCompras)
+  GROUP BY Compras.idCompras
+  HAVING (valorTotal>50000);
 
-f) select Credores.nome, Compras.descricao, Parcelas.valor,from Credores, Compras, Parcelas where (Parcelas.dtPagamento = null) and (Credores.idCredores = Compras.idCompras) order by Parcelas.dtVencimento;
+--f)
+  SELECT Credores.nome, Compras.descricao, Parcelas.valor
+  FROM Credores, Compras, Parcelas
+  WHERE (Parcelas.dtPagamento = null)
+  AND (Credores.idCredores = Compras.idCompras)
+  ORDER BY Parcelas.dtVencimento;
 
-g) select Compras.idCompras, Compras.dtCompra, Compras.descricao, Credor.nome, Parcelas.* from Parcelas, Compras where (Credor.idCredores = compras.idCompras) and (Parcelas.Compras_idCompras = Compras.idCompras);
+--g)
+  SELECT Compras.idCompras, Compras.dtCompra, Compras.descricao, Credor.nome, Parcelas.*
+  FROM Parcelas, Compras
+  WHERE (Credor.idCredores = compras.idCompras)
+  AND (Parcelas.Compras_idCompras = Compras.idCompras);
 
-h) select P.dtCompra, P.valor, P.multa, P.juros, E.nome, C.idCompras from Credores as E, Compras as C, Parcelas as P where (E.Credores_idCredores = C.Credores_idCredores) and (C.idCompras = P.Compras_idCompras) and (P.dtCompra = <hoje>) order by P.dtPagamento, E.nome;
+--h)
+  SELECT P.dtCompra, P.valor, P.multa, P.juros, E.nome, C.idCompras
+  FROM Credores AS E, Compras AS C, Parcelas AS P
+  WHERE (E.Credores_idCredores = C.Credores_idCredores)
+  AND (C.idCompras = P.Compras_idCompras)
+  AND (P.dtCompra = "11/10/2019")
+  ORDER BY P.dtPagamento, E.nome;
 
